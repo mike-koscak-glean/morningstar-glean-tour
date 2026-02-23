@@ -38,7 +38,6 @@ export default function GleanHome({ onRun, showGuide }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onRun]);
 
-  // Show the guide callout after a brief delay once intro modal is dismissed
   useEffect(() => {
     if (showGuide) {
       const t = setTimeout(() => setGuideVisible(true), 500);
@@ -48,16 +47,16 @@ export default function GleanHome({ onRun, showGuide }) {
 
   return (
     <div
-      className="flex-1 h-full relative flex items-center justify-center"
+      className="flex-1 h-full relative flex items-center justify-center px-4 sm:px-0"
       style={{
         background:
           "url('https://app.glean.com/images/stock/full/cesar-couto-bdDAnGcMIrs-unsplash.jpg') center center / cover no-repeat",
       }}
     >
       {/* Centered chat widget */}
-      <div className="w-full max-w-[720px] px-6">
+      <div className="w-full max-w-[720px] px-0 sm:px-6">
         {/* Greeting */}
-        <h1 className="text-white text-[32px] font-semibold mb-6 text-center drop-shadow-lg">
+        <h1 className="text-white text-2xl sm:text-[32px] font-semibold mb-4 sm:mb-6 text-center drop-shadow-lg">
           {greeting}
         </h1>
 
@@ -77,7 +76,7 @@ export default function GleanHome({ onRun, showGuide }) {
           <div className="px-4 pt-3 pb-3">
             <div
               ref={inputRef}
-              className="text-[15px] text-glean-text leading-relaxed min-h-[24px] outline-none"
+              className="text-sm sm:text-[15px] text-glean-text leading-relaxed min-h-[24px] outline-none"
             >
               {userQuery}
             </div>
@@ -94,13 +93,13 @@ export default function GleanHome({ onRun, showGuide }) {
               <div className="flex items-center gap-1 px-2 py-1 rounded-lg">
                 <MaskedIcon src={`${GLEAN_IMG}/feather/globe.svg`} size={16} />
               </div>
-              {/* Thinking chip */}
+              {/* Thinking chip — hide label on very small screens */}
               <div className="flex items-center gap-1.5 text-glean-gray text-sm px-2 py-1 rounded-lg">
                 <MaskedIcon
                   src={`${GLEAN_IMG}/lightbulb-3.svg`}
                   size={16}
                 />
-                <span>Thinking</span>
+                <span className="hidden sm:inline">Thinking</span>
               </div>
             </div>
 
@@ -122,7 +121,6 @@ export default function GleanHome({ onRun, showGuide }) {
                 </svg>
               </button>
 
-              {/* Pulsing ring around Run button */}
               {guideVisible && (
                 <div className="absolute inset-0 z-[1] flex items-center justify-center pointer-events-none">
                   <div className="w-8 h-8 rounded-full border-2 border-glean-blue run-btn-pulse" />
@@ -132,10 +130,10 @@ export default function GleanHome({ onRun, showGuide }) {
           </div>
         </div>
 
-        {/* Guide callout — appears below the card after intro modal dismissed */}
+        {/* Guide callout */}
         {guideVisible ? (
-          <div className="flex justify-center mt-5 fade-in">
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg px-5 py-3 flex items-center gap-3 max-w-[380px]">
+          <div className="flex justify-center mt-4 sm:mt-5 fade-in px-2">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg px-4 sm:px-5 py-3 flex items-center gap-3 max-w-[380px]">
               <div className="flex-shrink-0">
                 <MaskedIcon
                   src={`${GLEAN_IMG}/feather/corner-down-left.svg`}
@@ -143,17 +141,17 @@ export default function GleanHome({ onRun, showGuide }) {
                   color="#1C5BE0"
                 />
               </div>
-              <p className="text-sm text-glean-text leading-snug">
+              <p className="text-xs sm:text-sm text-glean-text leading-snug">
                 This query is pre-loaded for the demo.
                 <span className="font-medium text-glean-blue ml-1">
                   Press Enter
                 </span>{" "}
-                or click the blue button to see Glean in action.
+                or tap the blue button to see Glean in action.
               </p>
             </div>
           </div>
         ) : (
-          <p className="text-white/80 text-sm text-center mt-4 drop-shadow">
+          <p className="text-white/80 text-xs sm:text-sm text-center mt-3 sm:mt-4 drop-shadow">
             Press Enter or click Run to continue →
           </p>
         )}

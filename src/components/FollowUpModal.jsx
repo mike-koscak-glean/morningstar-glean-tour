@@ -16,7 +16,7 @@ export default function FollowUpModal({ onClose }) {
       style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
     >
       <div
-        className={`bg-white rounded-2xl shadow-2xl w-full max-w-[440px] px-8 py-8 ${
+        className={`bg-white rounded-2xl shadow-2xl w-full max-w-[440px] px-5 sm:px-8 py-6 sm:py-8 ${
           closing ? "modal-card-out" : "modal-card"
         }`}
       >

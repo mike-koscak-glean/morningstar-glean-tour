@@ -57,23 +57,14 @@ const CALLOUTS = [
 ];
 
 export default function GleanChat() {
-  /*
-   * Phase pipeline:
-   *   query → callout0 → thinking → showWork → callout1 →
-   *   streaming → callout2 → showSources → callout3 →
-   *   typing → callout4 → waitForEnter → done
-   */
-
   const [phase, setPhase] = useState("query");
   const [showWork, setShowWork] = useState(false);
   const [showSources, setShowSources] = useState(false);
   const [demoComplete, setDemoComplete] = useState(false);
 
-  /* ── Follow-up typewriter ── */
   const [followUpText, setFollowUpText] = useState("");
   const [showFollowUp, setShowFollowUp] = useState(false);
 
-  /* ── Refs for callout targets ── */
   const queryBubbleRef = useRef(null);
   const showWorkRef = useRef(null);
   const firstCitationRef = useRef(null);
@@ -104,13 +95,11 @@ export default function GleanChat() {
       return () => clearTimeout(t);
     }
     if (phase === "typing") {
-      // Typewriter-populate the follow-up query character by character
       let charIdx = 0;
       const interval = setInterval(() => {
         charIdx++;
         if (charIdx > followUpQuery.length) {
           clearInterval(interval);
-          // Brief pause then show callout 4
           setTimeout(() => setPhase("callout4"), 400);
           return;
         }
@@ -120,24 +109,14 @@ export default function GleanChat() {
     }
   }, [phase]);
 
-  /* ── Callout dismiss handler ── */
   const handleCalloutDismiss = useCallback(() => {
-    if (phase === "callout0") {
-      setPhase("thinking");
-    } else if (phase === "callout1") {
-      setPhase("streaming");
-    } else if (phase === "callout2") {
-      setPhase("showSources");
-    } else if (phase === "callout3") {
-      // Start auto-typing follow-up
-      setPhase("typing");
-    } else if (phase === "callout4") {
-      // Now waiting for user to press Enter
-      setPhase("waitForEnter");
-    }
+    if (phase === "callout0") setPhase("thinking");
+    else if (phase === "callout1") setPhase("streaming");
+    else if (phase === "callout2") setPhase("showSources");
+    else if (phase === "callout3") setPhase("typing");
+    else if (phase === "callout4") setPhase("waitForEnter");
   }, [phase]);
 
-  /* ── When streaming finishes ── */
   const handleStreamComplete = useCallback(() => {
     setTimeout(() => {
       const el = document.querySelector(".citation-circle");
@@ -146,7 +125,6 @@ export default function GleanChat() {
     }, 600);
   }, []);
 
-  /* ── Auto-scroll ── */
   useEffect(() => {
     const el = scrollContainerRef.current;
     if (el) {
@@ -162,7 +140,6 @@ export default function GleanChat() {
     }
   }, []);
 
-  /* ── Follow-up Enter handler ── */
   const handleFollowUpKeyDown = (e) => {
     if (e.key === "Enter" && followUpText.trim()) {
       e.preventDefault();
@@ -170,7 +147,6 @@ export default function GleanChat() {
     }
   };
 
-  /* ── Determine which callout to show ── */
   const getCallout = () => {
     if (phase === "callout0") return { idx: 0, ref: queryBubbleRef };
     if (phase === "callout1") return { idx: 1, ref: showWorkRef };
@@ -183,7 +159,6 @@ export default function GleanChat() {
 
   const callout = getCallout();
 
-  /* ── Visibility helpers ── */
   const showThinking =
     phase === "thinking" || phase === "showWork" || phase === "callout1";
   const showStream =
@@ -195,10 +170,7 @@ export default function GleanChat() {
     phase === "callout4" ||
     phase === "waitForEnter" ||
     phase === "done";
-
-  // Input is fully interactive only in "waitForEnter" or "done"
   const inputInteractive = phase === "waitForEnter" || phase === "done";
-  // Input bar looks active once typing starts
   const inputLooksActive =
     phase === "typing" ||
     phase === "callout4" ||
@@ -207,11 +179,14 @@ export default function GleanChat() {
 
   return (
     <div className="flex-1 h-full flex overflow-hidden">
-      <ChatSidebar />
+      {/* Chat sidebar — hidden on mobile */}
+      <div className="hidden lg:block">
+        <ChatSidebar />
+      </div>
 
       <div className="flex-1 flex flex-col h-full bg-white overflow-hidden">
         {/* Top bar */}
-        <header className="h-12 flex items-center justify-between px-4 border-b border-glean-border flex-shrink-0">
+        <header className="h-12 flex items-center justify-between px-3 sm:px-4 border-b border-glean-border flex-shrink-0">
           <div className="flex items-center gap-3 pointer-events-none cursor-default">
             <MaskedIcon src={`${GLEAN_IMG}/feather/menu.svg`} size={16} />
           </div>
@@ -227,7 +202,7 @@ export default function GleanChat() {
               src={`${GLEAN_IMG}/feather/more-horizontal.svg`}
               size={16}
             />
-            <button className="flex items-center gap-1.5 text-sm text-glean-gray border border-glean-border rounded-lg px-3 py-1.5">
+            <button className="hidden sm:flex items-center gap-1.5 text-sm text-glean-gray border border-glean-border rounded-lg px-3 py-1.5">
               <MaskedIcon src={`${GLEAN_IMG}/feather/lock.svg`} size={14} />
               Share
             </button>
@@ -240,14 +215,14 @@ export default function GleanChat() {
           data-scroll-container
           className="flex-1 overflow-y-auto"
         >
-          <div className="max-w-[780px] mx-auto px-6 py-6">
+          <div className="max-w-[780px] mx-auto px-3 sm:px-6 py-4 sm:py-6">
             {/* User query bubble */}
             <div
               ref={queryBubbleRef}
-              className="flex justify-end mb-6 slide-in-right"
+              className="flex justify-end mb-4 sm:mb-6 slide-in-right"
             >
-              <div className="bg-glean-bubble rounded-2xl px-4 py-3 max-w-[85%]">
-                <p className="text-[15px] text-glean-text">{userQuery}</p>
+              <div className="bg-glean-bubble rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 max-w-[90%] sm:max-w-[85%]">
+                <p className="text-sm sm:text-[15px] text-glean-text">{userQuery}</p>
               </div>
             </div>
 
@@ -293,42 +268,39 @@ export default function GleanChat() {
         </div>
 
         {/* Follow-up input bar */}
-        <div className="flex-shrink-0 px-6 pb-4 pt-2">
+        <div className="flex-shrink-0 px-3 sm:px-6 pb-3 sm:pb-4 pt-2">
           <div
             ref={inputBarRef}
             className={`max-w-[780px] mx-auto border border-glean-border rounded-2xl transition-all ${
               inputLooksActive ? "shadow-sm" : "opacity-60"
             }`}
           >
-            <div className="px-4 py-3">
+            <div className="px-3 sm:px-4 py-2.5 sm:py-3">
               {inputInteractive ? (
-                /* Fully editable input */
                 <input
                   type="text"
                   value={followUpText}
                   onChange={(e) => setFollowUpText(e.target.value)}
                   onKeyDown={handleFollowUpKeyDown}
                   placeholder="Explore a topic…"
-                  className="w-full text-[15px] text-glean-text placeholder-gray-400 outline-none bg-transparent"
+                  className="w-full text-sm sm:text-[15px] text-glean-text placeholder-gray-400 outline-none bg-transparent"
                   autoFocus
                 />
               ) : followUpText ? (
-                /* Typewriter preview (read-only, shows chars as they type in) */
-                <div className="text-[15px] text-glean-text flex items-center">
+                <div className="text-sm sm:text-[15px] text-glean-text flex items-center flex-wrap">
                   {followUpText}
                   {phase === "typing" && (
                     <span className="inline-block w-[2px] h-[18px] bg-glean-text ml-0.5 -mb-[3px] cursor-blink" />
                   )}
                 </div>
               ) : (
-                /* Placeholder */
-                <div className="text-[15px] text-gray-400 flex items-center">
+                <div className="text-sm sm:text-[15px] text-gray-400 flex items-center">
                   Explore a topic…
                 </div>
               )}
             </div>
-            <div className="px-4 pb-3 flex items-center justify-between pointer-events-none cursor-default">
-              <div className="flex items-center gap-3">
+            <div className="px-3 sm:px-4 pb-2.5 sm:pb-3 flex items-center justify-between pointer-events-none cursor-default">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-7 h-7 rounded-full border border-glean-border flex items-center justify-center">
                   <MaskedIcon
                     src={`${GLEAN_IMG}/feather/plus.svg`}
@@ -340,7 +312,7 @@ export default function GleanChat() {
                   size={16}
                 />
                 <MaskedIcon src={`${GLEAN_IMG}/building.svg`} size={16} />
-                <div className="flex items-center gap-1.5 text-sm text-glean-gray">
+                <div className="hidden sm:flex items-center gap-1.5 text-sm text-glean-gray">
                   <MaskedIcon src={`${GLEAN_IMG}/lightbulb-3.svg`} size={16} />
                   <span>Thinking</span>
                 </div>
@@ -354,7 +326,7 @@ export default function GleanChat() {
           </div>
 
           {/* Footer */}
-          <p className="text-[11px] text-gray-400 text-center mt-3">
+          <p className="text-[11px] text-gray-400 text-center mt-2 sm:mt-3">
             Prepared for Kemper by the Glean team
           </p>
         </div>

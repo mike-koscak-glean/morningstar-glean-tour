@@ -26,16 +26,16 @@ export default function SourceCards({ visible }) {
         </div>
       </div>
 
-      {/* Source cards */}
-      <div className="flex gap-3 flex-wrap">
+      {/* Source cards — responsive grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {sources.map((source, i) => (
           <div
             key={source.id}
-            className="fade-in-up bg-white border border-glean-border rounded-lg px-4 py-3 flex items-center gap-3 min-w-[260px] max-w-[300px] flex-1"
+            className="fade-in-up bg-white border border-glean-border rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-3"
             style={{ animationDelay: `${i * 150}ms` }}
           >
             {/* Icon */}
-            <div className="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0 p-1.5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0 p-1.5">
               <img
                 src={source.iconUrl}
                 alt=""
@@ -45,10 +45,10 @@ export default function SourceCards({ visible }) {
             </div>
             {/* Text */}
             <div className="min-w-0">
-              <div className="text-sm font-medium text-glean-text truncate leading-tight">
+              <div className="text-xs sm:text-sm font-medium text-glean-text truncate leading-tight">
                 {source.title}
               </div>
-              <div className="text-xs text-glean-gray mt-0.5 truncate">
+              <div className="text-[11px] sm:text-xs text-glean-gray mt-0.5 truncate">
                 {source.subtitle}
               </div>
             </div>

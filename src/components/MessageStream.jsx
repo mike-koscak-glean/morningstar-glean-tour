@@ -116,7 +116,7 @@ export default function MessageStream({ text, onComplete }) {
   return (
     <div
       ref={scrollRef}
-      className="ai-response text-[15px] leading-[1.7] text-glean-text"
+      className="ai-response text-sm sm:text-[15px] leading-[1.7] text-glean-text"
     >
       <ReactMarkdown
         remarkPlugins={remarkPlugins}

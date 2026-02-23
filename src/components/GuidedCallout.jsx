@@ -27,12 +27,13 @@ export default function GuidedCallout({
     const compute = () => {
       if (!targetRef?.current) return;
       const rect = targetRef.current.getBoundingClientRect();
-      const calloutW = 340;
+      const vw = window.innerWidth;
+      // Responsive width: narrower on small screens
+      const calloutW = vw < 640 ? Math.min(300, vw - 24) : 340;
 
       // Horizontal: centre callout on target, then clamp
       let left;
       if (arrowAlign === "right") {
-        // Align callout so its right side meets the target's right side
         left = rect.right - calloutW;
       } else if (arrowAlign === "center") {
         left = rect.left + rect.width / 2 - calloutW / 2;
@@ -42,8 +43,8 @@ export default function GuidedCallout({
 
       // Clamp to viewport
       if (left < 12) left = 12;
-      if (left + calloutW > window.innerWidth - 12) {
-        left = window.innerWidth - 12 - calloutW;
+      if (left + calloutW > vw - 12) {
+        left = vw - 12 - calloutW;
       }
 
       // Vertical
@@ -61,10 +62,9 @@ export default function GuidedCallout({
       // Compute arrow left relative to the callout
       const targetCenterX = rect.left + rect.width / 2;
       let arrowLeft = targetCenterX - left;
-      // Clamp arrow within callout bounds
       arrowLeft = Math.max(20, Math.min(calloutW - 20, arrowLeft));
 
-      setPos({ top, left, arrowLeft });
+      setPos({ top, left, arrowLeft, calloutW });
     };
 
     compute();
@@ -82,14 +82,13 @@ export default function GuidedCallout({
 
   return (
     <>
-      {/* Callout bubble */}
       <div
         ref={calloutRef}
-        className="callout-bubble fixed z-[95] bg-white border border-glean-border rounded-xl shadow-lg px-5 py-4"
+        className="callout-bubble fixed z-[95] bg-white border border-glean-border rounded-xl shadow-lg px-4 sm:px-5 py-3 sm:py-4"
         style={{
           top: pos.top,
           left: pos.left,
-          width: 340,
+          width: pos.calloutW,
           maxWidth: "calc(100vw - 24px)",
         }}
       >
@@ -98,9 +97,7 @@ export default function GuidedCallout({
           className="absolute"
           style={{
             left: pos.arrowLeft,
-            ...(arrowSide === "top"
-              ? { top: -7 }
-              : { bottom: -7 }),
+            ...(arrowSide === "top" ? { top: -7 } : { bottom: -7 }),
             width: 14,
             height: 14,
             transform: "translateX(-50%) rotate(45deg)",
@@ -118,10 +115,12 @@ export default function GuidedCallout({
           }}
         />
 
-        <p className="text-sm text-glean-text leading-relaxed mb-3">{text}</p>
+        <p className="text-xs sm:text-sm text-glean-text leading-relaxed mb-2 sm:mb-3">
+          {text}
+        </p>
         <button
           onClick={onDismiss}
-          className="text-sm font-medium text-glean-blue hover:text-blue-700 transition-colors"
+          className="text-xs sm:text-sm font-medium text-glean-blue hover:text-blue-700 transition-colors"
         >
           Got it →
         </button>
