@@ -143,7 +143,10 @@ export default function GleanChat() {
 
   const handleCalloutDismiss = useCallback(() => {
     if (phase === "callout0") setPhase("thinking");
-    else if (phase === "callout1") setPhase("streaming");
+    else if (phase === "callout1") {
+      setWorkExpanded(true); // Auto-expand so they see the thinking steps
+      setPhase("streaming");
+    }
     else if (phase === "callout2") setPhase("showSources");
     else if (phase === "callout3") setPhase("typing");
     else if (phase === "callout4") setPhase("waitForEnter");
