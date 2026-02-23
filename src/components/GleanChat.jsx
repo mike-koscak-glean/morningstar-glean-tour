@@ -27,6 +27,38 @@ const MaskedIcon = ({ src, size = 16, color = "#5F6368" }) => (
   />
 );
 
+/* ── Fictitious "Show work" thinking steps ── */
+const SHOW_WORK_STEPS = [
+  {
+    heading: "Searching company knowledge",
+    items: [
+      { icon: `${GLEAN_IMG}/feather/search.svg`, label: "auto claims cycle time process changes 2024" },
+    ],
+    docs: [
+      { icon: `${GLEAN_IMG}/logos/confluence3.svg`, label: "FNOL Triage Process Redesign - Q2 2024" },
+      { icon: `${GLEAN_IMG}/logos/sharepoint3.svg`, label: "Automated Claims Severity Scoring Model" },
+      { icon: `${GLEAN_IMG}/logos/jira3.svg`, label: "+12 more" },
+    ],
+  },
+  {
+    heading: "Reading documents",
+    items: [],
+    docs: [
+      { icon: `${GLEAN_IMG}/logos/confluence3.svg`, label: "FNOL Triage Process Redesign - Q2 2024" },
+      { icon: `${GLEAN_IMG}/logos/sharepoint3.svg`, label: "Claims Analytics Dashboard" },
+      { icon: `${GLEAN_IMG}/logos/jira3.svg`, label: "Vendor Assignment SLA Optimization" },
+    ],
+  },
+  {
+    heading: "Synthesizing answer",
+    items: [],
+    docs: [
+      { icon: `${GLEAN_IMG}/logos/confluence3.svg`, label: "Centralized Claims Process Docs" },
+    ],
+    note: "Cross-referencing 4 primary sources across Confluence, SharePoint, and Jira to compile a comprehensive summary of process improvements.",
+  },
+];
+
 /* ── Callout definitions ── */
 const CALLOUTS = [
   {
@@ -60,14 +92,14 @@ export default function GleanChat() {
   const [phase, setPhase] = useState("query");
   const [showWork, setShowWork] = useState(false);
   const [showSources, setShowSources] = useState(false);
-  const [demoComplete, setDemoComplete] = useState(false);
+  const [workExpanded, setWorkExpanded] = useState(false);
 
   const [followUpText, setFollowUpText] = useState("");
   const [showFollowUp, setShowFollowUp] = useState(false);
 
   const queryBubbleRef = useRef(null);
   const showWorkRef = useRef(null);
-  const firstCitationRef = useRef(null);
+  const citationRef = useRef(null);
   const sourceCardsRef = useRef(null);
   const inputBarRef = useRef(null);
   const scrollContainerRef = useRef(null);
@@ -117,10 +149,13 @@ export default function GleanChat() {
     else if (phase === "callout4") setPhase("waitForEnter");
   }, [phase]);
 
+  /* ── When streaming finishes, find citation ⁴ (last one) for the callout ── */
   const handleStreamComplete = useCallback(() => {
     setTimeout(() => {
-      const el = document.querySelector(".citation-circle");
-      if (el) firstCitationRef.current = el;
+      // Grab all citation circles and pick the last one (source 4)
+      const allCitations = document.querySelectorAll(".citation-circle");
+      const target = allCitations.length > 0 ? allCitations[allCitations.length - 1] : null;
+      if (target) citationRef.current = target;
       setPhase("callout2");
     }, 600);
   }, []);
@@ -151,7 +186,7 @@ export default function GleanChat() {
     if (phase === "callout0") return { idx: 0, ref: queryBubbleRef };
     if (phase === "callout1") return { idx: 1, ref: showWorkRef };
     if (phase === "callout2")
-      return { idx: 2, ref: { current: firstCitationRef.current } };
+      return { idx: 2, ref: { current: citationRef.current } };
     if (phase === "callout3") return { idx: 3, ref: sourceCardsRef };
     if (phase === "callout4") return { idx: 4, ref: inputBarRef };
     return null;
@@ -228,15 +263,78 @@ export default function GleanChat() {
 
             {/* AI Response area */}
             <div className="mb-4">
+              {/* Show work toggle + expandable panel */}
               {showWork && (
                 <div ref={showWorkRef} className="mb-3 fade-in">
-                  <button className="text-sm text-glean-gray flex items-center gap-1 pointer-events-none cursor-default">
+                  <button
+                    onClick={() => setWorkExpanded((v) => !v)}
+                    className="text-sm text-glean-gray flex items-center gap-1 cursor-pointer hover:text-glean-text transition-colors"
+                  >
                     Show work
                     <MaskedIcon
-                      src={`${GLEAN_IMG}/feather/chevron-right.svg`}
+                      src={
+                        workExpanded
+                          ? `${GLEAN_IMG}/feather/chevron-down.svg`
+                          : `${GLEAN_IMG}/feather/chevron-right.svg`
+                      }
                       size={14}
                     />
                   </button>
+
+                  {/* Expanded work panel */}
+                  {workExpanded && (
+                    <div className="mt-3 ml-1 border-l-2 border-blue-100 pl-4 space-y-4 fade-in">
+                      {SHOW_WORK_STEPS.map((step, i) => (
+                        <div key={i}>
+                          <p className="text-xs font-semibold text-glean-text mb-2">
+                            {step.heading}
+                          </p>
+                          {/* Search queries */}
+                          {step.items.map((item, j) => (
+                            <div
+                              key={j}
+                              className="flex items-center gap-2 mb-1.5"
+                            >
+                              <img
+                                src={item.icon}
+                                alt=""
+                                className="w-3.5 h-3.5 opacity-60"
+                                draggable="false"
+                              />
+                              <span className="text-xs text-glean-gray font-mono truncate">
+                                {item.label}
+                              </span>
+                            </div>
+                          ))}
+                          {/* Documents found */}
+                          <div className="flex flex-wrap gap-1.5 mt-1">
+                            {step.docs.map((doc, k) => (
+                              <div
+                                key={k}
+                                className="flex items-center gap-1.5 bg-gray-50 border border-glean-border rounded-md px-2 py-1"
+                              >
+                                <img
+                                  src={doc.icon}
+                                  alt=""
+                                  className="w-3.5 h-3.5"
+                                  draggable="false"
+                                />
+                                <span className="text-[11px] text-glean-text truncate max-w-[180px]">
+                                  {doc.label}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                          {/* Optional note */}
+                          {step.note && (
+                            <p className="text-[11px] text-glean-gray mt-2 leading-relaxed italic">
+                              {step.note}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
