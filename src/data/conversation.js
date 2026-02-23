@@ -33,7 +33,7 @@ export const sources = [
     id: 2,
     title: "Auto Claims Cycle Time Dashboard — Q3 Results",
     subtitle: "SharePoint · Claims Analytics",
-    iconUrl: "https://app.glean.com/images/logos/sharepoint3.svg",
+    iconUrl: "https://app.glean.com/images/logos/sharepoint.svg",
     author: "Kevin Torres",
     excerpt:
       "Q3 cycle time data shows the automated severity scoring model is reducing manual review steps by approximately 35%. Average end-to-end claim resolution dropped from 18.4 days to 14.1 days across property and casualty lines.",
