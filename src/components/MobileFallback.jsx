@@ -74,7 +74,7 @@ export default function MobileFallback() {
 
       {/* Footer */}
       <p className="text-[11px] text-gray-400 mt-10 text-center">
-        Prepared for TransUnion by the Glean team
+        Prepared for Kemper by the Glean team
       </p>
     </div>
   );

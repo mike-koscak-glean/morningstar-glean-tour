@@ -45,7 +45,7 @@ const CALLOUTS = [
     arrowAlign: "left",
   },
   {
-    text: "In a live environment, these open directly in Confluence, Jira, Google Drive — wherever the doc lives.",
+    text: "In a live environment, these open directly in Confluence, Jira, SharePoint — wherever the doc lives.",
     arrowSide: "top",
     arrowAlign: "left",
   },
@@ -355,7 +355,7 @@ export default function GleanChat() {
 
           {/* Footer */}
           <p className="text-[11px] text-gray-400 text-center mt-3">
-            Prepared for TransUnion by the Glean team
+            Prepared for Kemper by the Glean team
           </p>
         </div>
       </div>

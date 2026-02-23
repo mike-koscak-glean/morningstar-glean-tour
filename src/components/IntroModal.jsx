@@ -24,7 +24,7 @@ const MaskedIcon = ({ src, size = 20, color = "#1C5BE0" }) => (
 const bullets = [
   {
     icon: `${GLEAN_IMG}/feather/search.svg`,
-    text: "One place to search and chat across all your company's tools — Confluence, Jira, Google Drive, Slack, and more",
+    text: "One place to search and chat across all your company's tools — Confluence, Jira, SharePoint, Teams, and more",
   },
   {
     icon: `${GLEAN_IMG}/lightbulb-3.svg`,
@@ -58,7 +58,7 @@ export default function IntroModal({ onDismiss }) {
       >
         {/* Prepared for label */}
         <p className="text-xs text-glean-gray text-center mb-5 tracking-wide">
-          Prepared for TransUnion by the Glean team
+          Prepared for Kemper by the Glean team
         </p>
 
         {/* Glean logo */}
@@ -75,7 +75,7 @@ export default function IntroModal({ onDismiss }) {
         <h1 className="text-xl font-semibold text-glean-text text-center mb-6 leading-snug">
           See what Glean could look like
           <br />
-          for TransUnion
+          for Kemper
         </h1>
 
         {/* Bullet points */}

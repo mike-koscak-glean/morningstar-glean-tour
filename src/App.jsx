@@ -44,7 +44,7 @@ export default function App() {
               <GleanHome onRun={handleRun} showGuide={!showIntro} />
               {/* Footer on homepage */}
               <p className="text-[11px] text-gray-400 text-center pb-3 flex-shrink-0">
-                Prepared for TransUnion by the Glean team
+                Prepared for Kemper by the Glean team
               </p>
             </div>
           ) : (
