@@ -36,7 +36,7 @@ const SHOW_WORK_STEPS = [
     ],
     docs: [
       { icon: `${GLEAN_IMG}/logos/confluence3.svg`, label: "FNOL Triage Process Redesign - Q2 2024" },
-      { icon: `${GLEAN_IMG}/logos/sharepoint3.svg`, label: "Automated Claims Severity Scoring Model" },
+      { icon: `${GLEAN_IMG}/logos/sharepoint.svg`, label: "Automated Claims Severity Scoring Model" },
       { icon: `${GLEAN_IMG}/logos/jira3.svg`, label: "+12 more" },
     ],
   },
@@ -45,7 +45,7 @@ const SHOW_WORK_STEPS = [
     items: [],
     docs: [
       { icon: `${GLEAN_IMG}/logos/confluence3.svg`, label: "FNOL Triage Process Redesign - Q2 2024" },
-      { icon: `${GLEAN_IMG}/logos/sharepoint3.svg`, label: "Claims Analytics Dashboard" },
+      { icon: `${GLEAN_IMG}/logos/sharepoint.svg`, label: "Claims Analytics Dashboard" },
       { icon: `${GLEAN_IMG}/logos/jira3.svg`, label: "Vendor Assignment SLA Optimization" },
     ],
   },
