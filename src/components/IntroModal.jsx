@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import kemperLogo from "../kemper.png";
 
 const GLEAN_IMG = "https://app.glean.com/images";
 
@@ -61,18 +62,25 @@ export default function IntroModal({ onDismiss }) {
           Prepared for Kemper by the Glean team
         </p>
 
-        {/* Glean logo */}
-        <div className="flex justify-center mb-6">
+        {/* Logos — Glean × Kemper */}
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-6">
           <img
             src={`${GLEAN_IMG}/glean-logo2.svg`}
             alt="Glean"
-            className="w-10 h-10"
+            className="h-9 sm:h-10"
+            draggable="false"
+          />
+          <span className="text-gray-300 text-lg font-light select-none">×</span>
+          <img
+            src={kemperLogo}
+            alt="Kemper"
+            className="h-7 sm:h-8"
             draggable="false"
           />
         </div>
 
         {/* Headline */}
-        <h1 className="text-xl font-semibold text-glean-text text-center mb-6 leading-snug">
+        <h1 className="text-lg sm:text-xl font-semibold text-glean-text text-center mb-6 leading-snug">
           See what Glean could look like
           <br />
           for Kemper
