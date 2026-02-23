@@ -82,7 +82,7 @@ const CALLOUTS = [
     arrowAlign: "left",
   },
   {
-    text: "Try running a follow-up — in a live environment Glean would pull from your real documents and give you an instant answer.",
+    text: "Want to see Glean answer your team's real questions? Let's set up a live demo.",
     arrowSide: "bottom",
     arrowAlign: "center",
   },
@@ -103,6 +103,16 @@ export default function GleanChat() {
   const sourceCardsRef = useRef(null);
   const inputBarRef = useRef(null);
   const scrollContainerRef = useRef(null);
+
+  /* ── Helper: scroll chat to bottom ── */
+  const scrollToBottom = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (el) {
+      requestAnimationFrame(() => {
+        el.scrollTop = el.scrollHeight;
+      });
+    }
+  }, []);
 
   /* ── Phase progression timers ── */
   useEffect(() => {
@@ -141,21 +151,38 @@ export default function GleanChat() {
     }
   }, [phase]);
 
+  /* ── Auto-scroll when callout phases activate ── */
+  useEffect(() => {
+    if (
+      phase === "callout2" ||
+      phase === "callout3" ||
+      phase === "callout4" ||
+      phase === "showSources" ||
+      phase === "typing"
+    ) {
+      // Small delay to let DOM update before scrolling
+      const t = setTimeout(scrollToBottom, 100);
+      return () => clearTimeout(t);
+    }
+  }, [phase, scrollToBottom]);
+
   const handleCalloutDismiss = useCallback(() => {
     if (phase === "callout0") setPhase("thinking");
     else if (phase === "callout1") {
-      setWorkExpanded(true); // Auto-expand so they see the thinking steps
+      setWorkExpanded(true);
       setPhase("streaming");
     }
     else if (phase === "callout2") setPhase("showSources");
     else if (phase === "callout3") setPhase("typing");
-    else if (phase === "callout4") setPhase("waitForEnter");
+    else if (phase === "callout4") {
+      // Go straight to the Book Meeting modal
+      setShowFollowUp(true);
+    }
   }, [phase]);
 
   /* ── When streaming finishes, find citation ⁴ (last one) for the callout ── */
   const handleStreamComplete = useCallback(() => {
     setTimeout(() => {
-      // Grab all citation circles and pick the last one (source 4)
       const allCitations = document.querySelectorAll(".citation-circle");
       const target = allCitations.length > 0 ? allCitations[allCitations.length - 1] : null;
       if (target) citationRef.current = target;
@@ -163,6 +190,7 @@ export default function GleanChat() {
     }, 600);
   }, []);
 
+  /* ── Auto-scroll on content mutations ── */
   useEffect(() => {
     const el = scrollContainerRef.current;
     if (el) {
@@ -177,13 +205,6 @@ export default function GleanChat() {
       return () => observer.disconnect();
     }
   }, []);
-
-  const handleFollowUpKeyDown = (e) => {
-    if (e.key === "Enter" && followUpText.trim()) {
-      e.preventDefault();
-      setShowFollowUp(true);
-    }
-  };
 
   const getCallout = () => {
     if (phase === "callout0") return { idx: 0, ref: queryBubbleRef };
@@ -206,13 +227,10 @@ export default function GleanChat() {
     phase === "callout3" ||
     phase === "typing" ||
     phase === "callout4" ||
-    phase === "waitForEnter" ||
     phase === "done";
-  const inputInteractive = phase === "waitForEnter" || phase === "done";
   const inputLooksActive =
     phase === "typing" ||
     phase === "callout4" ||
-    phase === "waitForEnter" ||
     phase === "done";
 
   return (
@@ -253,7 +271,7 @@ export default function GleanChat() {
           data-scroll-container
           className="flex-1 overflow-y-auto"
         >
-          <div className="max-w-[780px] mx-auto px-3 sm:px-6 py-4 sm:py-6">
+          <div className="max-w-[780px] mx-auto px-3 sm:px-6 py-4 sm:py-6 pb-8 sm:pb-10">
             {/* User query bubble */}
             <div
               ref={queryBubbleRef}
@@ -292,7 +310,6 @@ export default function GleanChat() {
                           <p className="text-xs font-semibold text-glean-text mb-2">
                             {step.heading}
                           </p>
-                          {/* Search queries */}
                           {step.items.map((item, j) => (
                             <div
                               key={j}
@@ -309,7 +326,6 @@ export default function GleanChat() {
                               </span>
                             </div>
                           ))}
-                          {/* Documents found */}
                           <div className="flex flex-wrap gap-1.5 mt-1">
                             {step.docs.map((doc, k) => (
                               <div
@@ -328,7 +344,6 @@ export default function GleanChat() {
                               </div>
                             ))}
                           </div>
-                          {/* Optional note */}
                           {step.note && (
                             <p className="text-[11px] text-glean-gray mt-2 leading-relaxed italic">
                               {step.note}
@@ -377,17 +392,7 @@ export default function GleanChat() {
             }`}
           >
             <div className="px-3 sm:px-4 py-2.5 sm:py-3">
-              {inputInteractive ? (
-                <input
-                  type="text"
-                  value={followUpText}
-                  onChange={(e) => setFollowUpText(e.target.value)}
-                  onKeyDown={handleFollowUpKeyDown}
-                  placeholder="Explore a topic…"
-                  className="w-full text-sm sm:text-[15px] text-glean-text placeholder-gray-400 outline-none bg-transparent"
-                  autoFocus
-                />
-              ) : followUpText ? (
+              {followUpText ? (
                 <div className="text-sm sm:text-[15px] text-glean-text flex items-center flex-wrap">
                   {followUpText}
                   {phase === "typing" && (
@@ -445,10 +450,8 @@ export default function GleanChat() {
         />
       )}
 
-      {/* ── Follow-up modal ── */}
-      {showFollowUp && (
-        <FollowUpModal onClose={() => setShowFollowUp(false)} />
-      )}
+      {/* ── Book meeting modal ── */}
+      {showFollowUp && <FollowUpModal />}
     </div>
   );
 }
