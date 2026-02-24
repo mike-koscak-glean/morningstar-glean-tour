@@ -155,7 +155,7 @@ export default function GleanHome({ onRun, showGuide }) {
                   </span>
                   button or press{" "}
                   <span className="font-semibold text-glean-blue">Enter</span>{" "}
-                  to start
+                  to try Glean
                 </p>
               </div>
             </div>
