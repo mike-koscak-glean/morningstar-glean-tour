@@ -44,11 +44,13 @@ export default function PersonaSelect({ onSelect }) {
 
   return (
     <div
-      className={`min-h-screen w-full flex flex-col items-center justify-center px-4 py-8 sm:py-12 transition-opacity duration-300 ${
+      className={`min-h-screen w-full flex flex-col items-center px-4 py-8 sm:py-12 overflow-y-auto transition-opacity duration-300 ${
         selectedIdx !== null ? "opacity-0" : "opacity-100"
       }`}
       style={{ background: "linear-gradient(180deg, #FAFBFC 0%, #FFFFFF 50%)" }}
     >
+      {/* Spacer to vertically center on tall screens */}
+      <div className="flex-1 min-h-[20px]" />
       {/* Logos — Glean × Morningstar */}
       <div className="flex items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 fade-in">
         <img
@@ -113,8 +115,11 @@ export default function PersonaSelect({ onSelect }) {
         ))}
       </div>
 
+      {/* Bottom spacer to vertically center on tall screens */}
+      <div className="flex-1 min-h-[20px]" />
+
       {/* Footer */}
-      <p className="text-[11px] text-gray-400 text-center fade-in">
+      <p className="text-[11px] text-gray-400 text-center fade-in pb-2">
         Prepared for Morningstar by the Glean team
       </p>
     </div>

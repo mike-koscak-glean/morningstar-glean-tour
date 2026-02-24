@@ -11,8 +11,9 @@
 html, body, #root {
   height: 100%;
   width: 100%;
-  overflow: hidden;
   font-family: 'Inter', system-ui, sans-serif;
+  /* No global overflow:hidden — the app shell manages its own overflow.
+     This allows the persona-select landing page to scroll on short screens. */
 }
 
 /* Typewriter cursor blink */

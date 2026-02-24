@@ -200,11 +200,21 @@ export default function GleanChat({ flow }) {
     if (
       phase === "callout2" ||
       phase === "callout3" ||
-      phase === "callout4" ||
-      phase === "showSources" ||
-      phase === "typing"
+      phase === "showSources"
     ) {
       const t = setTimeout(scrollToBottom, 100);
+      return () => clearTimeout(t);
+    }
+    // For the follow-up input phases, scroll the input bar itself into view
+    // so it's not cut off on mobile by browser chrome
+    if (phase === "typing" || phase === "callout4") {
+      const t = setTimeout(() => {
+        scrollToBottom();
+        inputBarRef.current?.scrollIntoView?.({
+          behavior: "smooth",
+          block: "end",
+        });
+      }, 150);
       return () => clearTimeout(t);
     }
   }, [phase, scrollToBottom]);
@@ -430,7 +440,7 @@ export default function GleanChat({ flow }) {
           </div>
 
           {/* Follow-up input bar */}
-          <div className="flex-shrink-0 px-3 sm:px-6 pb-3 sm:pb-4 pt-2">
+          <div className="flex-shrink-0 px-3 sm:px-6 pb-[env(safe-area-inset-bottom,12px)] sm:pb-4 pt-2">
             <div
               ref={inputBarRef}
               className={`max-w-[780px] mx-auto border border-glean-border rounded-2xl transition-all ${
@@ -487,7 +497,7 @@ export default function GleanChat({ flow }) {
             </div>
 
             {/* Footer */}
-            <p className="text-[11px] text-gray-400 text-center mt-2 sm:mt-3">
+            <p className="text-[11px] text-gray-400 text-center mt-2 sm:mt-3 pb-2">
               Prepared for Morningstar by the Glean team
             </p>
           </div>
