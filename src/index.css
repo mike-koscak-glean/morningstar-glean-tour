@@ -229,3 +229,41 @@ html, body, #root {
 .ai-response p:last-child {
   margin-bottom: 0;
 }
+
+/* ── Markdown table styling (Finance flow) ── */
+.ai-response table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ai-response thead th {
+  background-color: #F8F9FA;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 10px;
+  border: 1px solid #E8EAED;
+  white-space: nowrap;
+}
+
+.ai-response tbody td {
+  padding: 6px 10px;
+  border: 1px solid #E8EAED;
+}
+
+.ai-response tbody tr:hover {
+  background-color: #F8F9FA;
+}
+
+/* ── Markdown list styling ── */
+.ai-response ul {
+  list-style: disc;
+  padding-left: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+.ai-response li {
+  margin-bottom: 0.25em;
+}

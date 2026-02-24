@@ -17,7 +17,7 @@ export default function FollowUpModal() {
         {/* Body */}
         <p className="text-sm text-glean-gray text-center leading-relaxed mb-6">
           In a live Glean environment, you'd get a real answer here — connected
-          to Kemper's actual documents and tools. Let's set up 30 minutes to
+          to Morningstar's actual documents and tools. Let's set up 30 minutes to
           show you the real thing.
         </p>
 

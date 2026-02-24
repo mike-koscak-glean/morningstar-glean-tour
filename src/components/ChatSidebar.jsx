@@ -1,5 +1,4 @@
 import React from "react";
-import { chatHistory } from "../data/conversation";
 
 const GLEAN_IMG = "https://app.glean.com/images";
 
@@ -22,7 +21,7 @@ const MaskedIcon = ({ src, size = 14, color = "#5F6368" }) => (
   />
 );
 
-export default function ChatSidebar() {
+export default function ChatSidebar({ chatHistory }) {
   return (
     <div className="w-[240px] h-full bg-white border-r border-glean-border flex flex-col flex-shrink-0 pointer-events-none cursor-default select-none">
       {/* Header */}

@@ -1,8 +1,32 @@
 import React from "react";
-import { sources } from "../data/conversation";
 
-export default function SourceCards({ visible }) {
-  if (!visible) return null;
+/** Renders either an icon image or a colored-circle fallback */
+function SourceIcon({ iconUrl, iconFallback, size = "w-full h-full" }) {
+  if (iconUrl) {
+    return (
+      <img
+        src={iconUrl}
+        alt=""
+        className={`${size} object-contain`}
+        draggable="false"
+      />
+    );
+  }
+  if (iconFallback) {
+    return (
+      <div
+        className="w-full h-full rounded flex items-center justify-center text-white text-xs font-bold"
+        style={{ backgroundColor: iconFallback.color }}
+      >
+        {iconFallback.letter}
+      </div>
+    );
+  }
+  return null;
+}
+
+export default function SourceCards({ visible, sources }) {
+  if (!visible || !sources) return null;
 
   return (
     <div className="mt-5">
@@ -11,13 +35,12 @@ export default function SourceCards({ visible }) {
         <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-full border border-glean-border">
           <div className="flex -space-x-1">
             {sources.map((s) => (
-              <img
+              <div
                 key={s.id}
-                src={s.iconUrl}
-                alt=""
-                className="w-4 h-4 rounded-sm border border-white"
-                draggable="false"
-              />
+                className="w-4 h-4 rounded-sm border border-white overflow-hidden flex-shrink-0"
+              >
+                <SourceIcon iconUrl={s.iconUrl} iconFallback={s.iconFallback} />
+              </div>
             ))}
           </div>
           <span className="text-sm text-glean-gray ml-1">
@@ -35,12 +58,10 @@ export default function SourceCards({ visible }) {
             style={{ animationDelay: `${i * 150}ms` }}
           >
             {/* Icon */}
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0 p-1.5">
-              <img
-                src={source.iconUrl}
-                alt=""
-                className="w-full h-full object-contain"
-                draggable="false"
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0 p-1.5 overflow-hidden">
+              <SourceIcon
+                iconUrl={source.iconUrl}
+                iconFallback={source.iconFallback}
               />
             </div>
             {/* Text */}

@@ -1,7 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { sources } from "../data/conversation";
+import React, { useState, useRef, useEffect, useContext, createContext } from "react";
+
+/** Context so CitationBubble can access the active flow's sources */
+export const SourcesContext = createContext([]);
 
 export default function CitationBubble({ num }) {
+  const sources = useContext(SourcesContext);
   const [hovered, setHovered] = useState(false);
   const [popoverStyle, setPopoverStyle] = useState({});
   const bubbleRef = useRef(null);
@@ -43,6 +46,31 @@ export default function CitationBubble({ num }) {
     return <span className="citation-circle">{num}</span>;
   }
 
+  /** Render either an icon image or a colored-circle fallback */
+  const renderIcon = () => {
+    if (source.iconUrl) {
+      return (
+        <img
+          src={source.iconUrl}
+          alt=""
+          className="w-full h-full object-contain"
+          draggable="false"
+        />
+      );
+    }
+    if (source.iconFallback) {
+      return (
+        <div
+          className="w-full h-full rounded flex items-center justify-center text-white text-[10px] font-bold"
+          style={{ backgroundColor: source.iconFallback.color }}
+        >
+          {source.iconFallback.letter}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       <span
@@ -64,13 +92,8 @@ export default function CitationBubble({ num }) {
         >
           {/* Header */}
           <div className="flex items-center gap-2.5 mb-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0 p-1">
-              <img
-                src={source.iconUrl}
-                alt=""
-                className="w-full h-full object-contain"
-                draggable="false"
-              />
+            <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0 p-1 overflow-hidden">
+              {renderIcon()}
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-sm font-medium text-glean-text leading-tight truncate">

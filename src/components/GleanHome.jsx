@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { greeting, userQuery } from "../data/conversation";
 
 const GLEAN_IMG = "https://app.glean.com/images";
 
@@ -22,7 +21,7 @@ const MaskedIcon = ({ src, size = 16, color = "#5F6368" }) => (
   />
 );
 
-export default function GleanHome({ onRun, showGuide }) {
+export default function GleanHome({ onRun, showGuide, greeting, userQuery }) {
   const inputRef = useRef(null);
   const runBtnRef = useRef(null);
   const [guideVisible, setGuideVisible] = useState(false);

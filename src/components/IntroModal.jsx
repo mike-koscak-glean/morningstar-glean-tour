@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import kemperLogo from "../kemper.png";
+import morningstarLogo from "../morningstar.png";
 
 const GLEAN_IMG = "https://app.glean.com/images";
 
@@ -25,7 +25,7 @@ const MaskedIcon = ({ src, size = 20, color = "#1C5BE0" }) => (
 const bullets = [
   {
     icon: `${GLEAN_IMG}/feather/search.svg`,
-    text: "One place to search and chat across all your company's tools — Confluence, Jira, SharePoint, Teams, and more",
+    text: "One place to search and chat across all your company's tools — Salesforce, Confluence, SharePoint, ServiceNow, Jira, and more",
   },
   {
     icon: `${GLEAN_IMG}/lightbulb-3.svg`,
@@ -59,10 +59,10 @@ export default function IntroModal({ onDismiss }) {
       >
         {/* Prepared for label */}
         <p className="text-xs text-glean-gray text-center mb-5 tracking-wide">
-          Prepared for Kemper by the Glean team
+          Prepared for Morningstar by the Glean team
         </p>
 
-        {/* Logos — Glean × Kemper */}
+        {/* Logos — Glean × Morningstar */}
         <div className="flex items-center justify-center gap-3 sm:gap-4 mb-6">
           <img
             src={`${GLEAN_IMG}/glean-logo2.svg`}
@@ -72,8 +72,8 @@ export default function IntroModal({ onDismiss }) {
           />
           <span className="text-gray-300 text-lg font-light select-none">×</span>
           <img
-            src={kemperLogo}
-            alt="Kemper"
+            src={morningstarLogo}
+            alt="Morningstar"
             className="h-7 sm:h-8"
             draggable="false"
           />
@@ -83,7 +83,7 @@ export default function IntroModal({ onDismiss }) {
         <h1 className="text-lg sm:text-xl font-semibold text-glean-text text-center mb-6 leading-snug">
           See what Glean could look like
           <br />
-          for Kemper
+          for Morningstar
         </h1>
 
         {/* Bullet points */}

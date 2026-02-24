@@ -61,6 +61,9 @@ const citationComponents = {
   strong: ({ children }) => (
     <strong className="font-semibold">{processChildren(children)}</strong>
   ),
+  td: ({ children }) => <td>{processChildren(children)}</td>,
+  th: ({ children }) => <th>{processChildren(children)}</th>,
+  li: ({ children }) => <li>{processChildren(children)}</li>,
 };
 
 export default function MessageStream({ text, onComplete }) {
