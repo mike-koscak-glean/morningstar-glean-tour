@@ -28,6 +28,17 @@ export default function FollowUpModal() {
         >
           Book a meeting →
         </a>
+
+        {/* AE contact */}
+        <p className="text-xs text-glean-gray text-center mt-4 leading-relaxed">
+          Or contact your account executive, Taylor Lundberg at{" "}
+          <a
+            href="mailto:taylor.lundberg@glean.com"
+            className="text-glean-blue hover:underline"
+          >
+            taylor.lundberg@glean.com
+          </a>
+        </p>
       </div>
     </div>
   );
