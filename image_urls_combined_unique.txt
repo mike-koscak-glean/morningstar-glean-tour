@@ -1,3 +1,5 @@
+https://app.glean.com/images/logos/salesforce.svg
+https://app.glean.com/images/logos/tableau.svg
 https://app.glean.com/images/logos/sharepoint.svg
 https://app.glean.com/images/logos/outlook.svg
 https://app.glean.com/images/logos/confluence3.svg

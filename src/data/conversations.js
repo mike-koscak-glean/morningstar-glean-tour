@@ -10,7 +10,7 @@ export const flows = [
       title: "Sales / GTM",
       subtitle: "Strategic Account Executive",
     },
-    greeting: "Good afternoon, Sam",
+    greeting: "Good afternoon",
     userQuery:
       "Give me a full account overview for Fidelity Investments including contract status, recent Gong call themes, open Salesforce opportunities, and cross-sell potential into PitchBook or Sustainalytics",
 
@@ -39,8 +39,8 @@ Would you like me to draft a QBR agenda for the Fidelity renewal, or generate a 
         id: 1,
         title: "Fidelity Investments — Account Record...",
         subtitle: "Salesforce · Institutional Sales",
-        iconUrl: null,
-        iconFallback: { letter: "S", color: "#00A1E0" },
+        iconUrl: `${GLEAN_IMG}/logos/salesforce.svg`,
+        iconFallback: null,
         author: "Ryan Parker",
         excerpt:
           "Fidelity holds a $2.4M annual contract across Morningstar Direct ($1.8M, renewed Jan 2025) and Morningstar Data ($620K, up for renewal June 2025). Account has grown 18% YoY driven by expanded Direct seat count.",
@@ -69,8 +69,8 @@ Would you like me to draft a QBR agenda for the Fidelity renewal, or generate a 
         id: 4,
         title: "Cross-Sell Benchmarking — Inst. Accounts...",
         subtitle: "Tableau · Revenue Ops",
-        iconUrl: null,
-        iconFallback: { letter: "T", color: "#E97627" },
+        iconUrl: `${GLEAN_IMG}/logos/tableau.svg`,
+        iconFallback: null,
         author: "Priya Mehta",
         excerpt:
           "Based on comparable accounts (T. Rowe Price, Wellington), Fidelity's equity research usage pattern suggests strong fit for Morningstar Indexes licensing ($400K avg.) and Sustainalytics EU Taxonomy module.",
@@ -97,8 +97,8 @@ Would you like me to draft a QBR agenda for the Fidelity renewal, or generate a 
         "Fidelity Investments account contract opportunities call themes 2025",
       searching: [
         {
-          icon: null,
-          iconFallback: { letter: "S", color: "#00A1E0" },
+          icon: `${GLEAN_IMG}/logos/salesforce.svg`,
+          iconFallback: null,
           label: "Fidelity Investments — Salesforce Ac...",
         },
         {
@@ -110,8 +110,8 @@ Would you like me to draft a QBR agenda for the Fidelity renewal, or generate a 
       ],
       reading: [
         {
-          icon: null,
-          iconFallback: { letter: "S", color: "#00A1E0" },
+          icon: `${GLEAN_IMG}/logos/salesforce.svg`,
+          iconFallback: null,
           label: "Fidelity Investments — Salesforce Ac...",
         },
         {
@@ -143,7 +143,7 @@ Would you like me to draft a QBR agenda for the Fidelity renewal, or generate a 
       title: "Customer Support",
       subtitle: "Direct Support Representative",
     },
-    greeting: "Good afternoon, Sam",
+    greeting: "Good afternoon",
     userQuery:
       "A Morningstar Direct client says their portfolio holdings and performance look wrong compared to their internal system. What are the likely root causes and what troubleshooting steps should I follow?",
 
@@ -204,8 +204,8 @@ Would you like me to draft a client-facing email explaining the data refresh sch
         id: 4,
         title: "Support Case Analytics — Root Cause Report",
         subtitle: "ServiceNow · Support Ops",
-        iconUrl: null,
-        iconFallback: { letter: "S", color: "#81B5A1" },
+        iconUrl: `${GLEAN_IMG}/logos/servicenow.svg`,
+        iconFallback: null,
         author: "Operations Analytics",
         excerpt:
           "Root causes by frequency: timing lag on custodian feeds (42%), incorrect benchmark assignment (23%), missing corporate actions (18%), calculation methodology differences (12%).",
@@ -278,7 +278,7 @@ Would you like me to draft a client-facing email explaining the data refresh sch
       title: "Product / Developer",
       subtitle: "Data Collections Analyst",
     },
-    greeting: "Good afternoon, Sam",
+    greeting: "Good afternoon",
     userQuery:
       "What is the documented SOP for handling special case prospectuses in Data Collections, specifically for multi-share-class mutual funds with non-standard fee structures?",
 
@@ -405,7 +405,7 @@ If the fund family is not in the exception guide, escalate to the Senior Data An
       title: "Finance",
       subtitle: "FP&A Analyst",
     },
-    greeting: "Good afternoon, Sam",
+    greeting: "Good afternoon",
     userQuery:
       "Summarize our Q4 2025 revenue performance by business segment and flag any material variances against the operating plan that exceed 5%",
 
@@ -462,8 +462,8 @@ Would you like me to pull the full segment P&L detail, or generate a variance co
         id: 3,
         title: "Wealth Segment AUM Report — Q4 2025",
         subtitle: "Tableau · Investment Mgmt",
-        iconUrl: null,
-        iconFallback: { letter: "T", color: "#E97627" },
+        iconUrl: `${GLEAN_IMG}/logos/tableau.svg`,
+        iconFallback: null,
         author: "Michael Rivera",
         excerpt:
           "Net outflows of $2.8B from TAMP in Oct–Nov, concentrated in advisor channel. Q4 market correction compressed basis-point revenue by ~$3.2M. Q1 2026 forecast revised down 8%.",
@@ -472,8 +472,8 @@ Would you like me to pull the full segment P&L detail, or generate a variance co
         id: 4,
         title: "Index Licensing Pipeline — Q4 Close",
         subtitle: "Salesforce · Index Solutions",
-        iconUrl: null,
-        iconFallback: { letter: "S", color: "#00A1E0" },
+        iconUrl: `${GLEAN_IMG}/logos/salesforce.svg`,
+        iconFallback: null,
         author: "Amy Nakamura",
         excerpt:
           "Strong index licensing fees — $2.9M from new ETF product launches tracking Morningstar indexes, $1.8M from expanded US Market Index licensing.",
@@ -518,8 +518,8 @@ Would you like me to pull the full segment P&L detail, or generate a variance co
           label: "Q4 2025 Revenue Summary —...",
         },
         {
-          icon: null,
-          iconFallback: { letter: "T", color: "#E97627" },
+          icon: `${GLEAN_IMG}/logos/tableau.svg`,
+          iconFallback: null,
           label: "Segment P&L — Q4 Close...",
         },
         {
