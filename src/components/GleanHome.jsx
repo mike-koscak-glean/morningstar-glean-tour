@@ -130,24 +130,34 @@ export default function GleanHome({ onRun, showGuide }) {
           </div>
         </div>
 
-        {/* Guide callout */}
+        {/* Guide callout — right-aligned, pointing at the run button */}
         {guideVisible ? (
-          <div className="flex justify-center mt-4 sm:mt-5 fade-in px-2">
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg px-4 sm:px-5 py-3 flex items-center gap-3 max-w-[380px]">
-              <div className="flex-shrink-0">
-                <MaskedIcon
-                  src={`${GLEAN_IMG}/feather/corner-down-left.svg`}
-                  size={18}
-                  color="#1C5BE0"
-                />
+          <div className="flex justify-end mt-3 sm:mt-4 fade-in px-2 sm:px-4">
+            <div className="bob-animation relative">
+              {/* Arrow pointing up toward the run button */}
+              <div
+                className="absolute -top-2 right-4"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: "8px solid transparent",
+                  borderRight: "8px solid transparent",
+                  borderBottom: "8px solid rgba(255,255,255,0.95)",
+                }}
+              />
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg px-4 sm:px-5 py-3 max-w-[320px] sm:max-w-[340px]">
+                <p className="text-xs sm:text-sm text-glean-text leading-snug text-center">
+                  Tap the
+                  <span className="inline-flex items-center justify-center w-5 h-5 bg-glean-blue rounded-full mx-1 align-middle">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="white">
+                      <path d="M5 3l14 9-14 9V3z" />
+                    </svg>
+                  </span>
+                  button or press{" "}
+                  <span className="font-semibold text-glean-blue">Enter</span>{" "}
+                  to start
+                </p>
               </div>
-              <p className="text-xs sm:text-sm text-glean-text leading-snug">
-                This query is pre-loaded for the demo.
-                <span className="font-medium text-glean-blue ml-1">
-                  Press Enter
-                </span>{" "}
-                or tap the blue button to see Glean in action.
-              </p>
             </div>
           </div>
         ) : (

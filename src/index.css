@@ -157,6 +157,15 @@ html, body, #root {
   animation: runBtnPulse 2s ease-out infinite;
 }
 
+@keyframes bobUpDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.bob-animation {
+  animation: bobUpDown 1.8s ease-in-out infinite;
+}
+
 /* ── Modal backdrop ── */
 @keyframes backdropIn {
   from { opacity: 0; }
