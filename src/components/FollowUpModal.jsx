@@ -23,20 +23,22 @@ export default function FollowUpModal() {
 
         {/* Primary CTA — only option */}
         <a
-          href="#book"
+          href="https://calendar.app.google/4ettvhBnPpcMQzEG9"
+          target="_blank"
+          rel="noopener noreferrer"
           className="block w-full bg-glean-blue hover:bg-blue-700 text-white font-medium text-[15px] py-3 rounded-lg transition-colors text-center"
         >
           Book a meeting →
         </a>
 
-        {/* AE contact */}
+        {/* SE contact */}
         <p className="text-xs text-glean-gray text-center mt-4 leading-relaxed">
-          Or contact your account executive, Taylor Lundberg at{" "}
+          Or contact your solution engineer, Mike Koscak at{" "}
           <a
-            href="mailto:taylor.lundberg@glean.com"
+            href="mailto:mike.koscak@glean.com"
             className="text-glean-blue hover:underline"
           >
-            taylor.lundberg@glean.com
+            mike.koscak@glean.com
           </a>
         </p>
       </div>
