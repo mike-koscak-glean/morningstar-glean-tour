@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FollowUpModal() {
+export default function FollowUpModal({ onRestart }) {
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center px-4 modal-backdrop"
@@ -41,6 +41,16 @@ export default function FollowUpModal() {
             mike.koscak@glean.com
           </a>
         </p>
+
+        {/* Restart */}
+        <div className="mt-5 pt-4 border-t border-glean-border text-center">
+          <button
+            onClick={onRestart}
+            className="text-xs text-gray-400 hover:text-glean-gray transition-colors"
+          >
+            ↩ Restart demo
+          </button>
+        </div>
       </div>
     </div>
   );

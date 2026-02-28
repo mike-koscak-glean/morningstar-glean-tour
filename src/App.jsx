@@ -51,6 +51,13 @@ export default function App() {
     setShowIntro(false);
   }, []);
 
+  const handleRestart = useCallback(() => {
+    window.history.pushState({}, "", "/");
+    setSelectedPersona(null);
+    setView("home");
+    setShowIntro(true);
+  }, []);
+
   // Show persona selection page when no persona is chosen
   if (selectedPersona === null) {
     return (
@@ -87,7 +94,7 @@ export default function App() {
               </p>
             </div>
           ) : (
-            <GleanChat flow={activeFlow} />
+            <GleanChat flow={activeFlow} onRestart={handleRestart} />
           )}
         </div>
       </div>

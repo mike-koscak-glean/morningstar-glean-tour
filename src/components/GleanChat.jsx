@@ -121,7 +121,7 @@ const CALLOUTS = [
   },
 ];
 
-export default function GleanChat({ flow }) {
+export default function GleanChat({ flow, onRestart }) {
   const {
     userQuery,
     aiResponse,
@@ -516,7 +516,7 @@ export default function GleanChat({ flow }) {
         )}
 
         {/* ── Book meeting modal ── */}
-        {showFollowUp && <FollowUpModal />}
+        {showFollowUp && <FollowUpModal onRestart={onRestart} />}
       </div>
     </SourcesContext.Provider>
   );
