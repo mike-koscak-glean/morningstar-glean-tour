@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import NavSidebar from "./components/NavSidebar";
 import GleanHome from "./components/GleanHome";
 import GleanChat from "./components/GleanChat";
@@ -25,7 +26,12 @@ export default function App() {
 
   // Show persona selection page when no persona is chosen
   if (selectedPersona === null) {
-    return <PersonaSelect onSelect={handlePersonaSelect} />;
+    return (
+      <>
+        <PersonaSelect onSelect={handlePersonaSelect} />
+        <Analytics />
+      </>
+    );
   }
 
   const activeFlow = flows[selectedPersona];
@@ -61,6 +67,7 @@ export default function App() {
 
       {/* Intro modal — shows above everything */}
       {showIntro && <IntroModal onDismiss={handleIntroDismiss} />}
+      <Analytics />
     </>
   );
 }
