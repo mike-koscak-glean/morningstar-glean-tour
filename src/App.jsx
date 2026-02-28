@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import NavSidebar from "./components/NavSidebar";
 import GleanHome from "./components/GleanHome";
@@ -7,10 +7,37 @@ import IntroModal from "./components/IntroModal";
 import PersonaSelect from "./components/PersonaSelect";
 import { flows } from "./data/conversations";
 
+/** Map a URL pathname like "/sales" → flow index, or null for unknown/root */
+function personaIdxFromPath(pathname) {
+  const slug = pathname.replace(/^\//, "").toLowerCase();
+  const idx = flows.findIndex((f) => f.id === slug);
+  return idx >= 0 ? idx : null;
+}
+
 export default function App() {
-  const [selectedPersona, setSelectedPersona] = useState(null);
+  // Initialise from the URL so deep-links like /sales work directly
+  const [selectedPersona, setSelectedPersona] = useState(() =>
+    personaIdxFromPath(window.location.pathname)
+  );
   const [view, setView] = useState("home"); // "home" | "chat"
   const [showIntro, setShowIntro] = useState(true);
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const onPopState = () => {
+      const idx = personaIdxFromPath(window.location.pathname);
+      if (idx === null) {
+        // Back to root — reset to persona selection
+        setSelectedPersona(null);
+        setView("home");
+        setShowIntro(true);
+      } else {
+        setSelectedPersona(idx);
+      }
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
 
   const handlePersonaSelect = useCallback((idx) => {
     setSelectedPersona(idx);

@@ -38,6 +38,8 @@ export default function PersonaSelect({ onSelect }) {
 
   const handleClick = (idx) => {
     setSelectedIdx(idx);
+    // Push a unique URL so Vercel Analytics tracks which persona was chosen
+    window.history.pushState({}, "", `/${flows[idx].id}`);
     // Short delay for a nice transition feel
     setTimeout(() => onSelect(idx), 300);
   };
